@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576019599724.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4207422038",
+    "id" : "463717B4",
+    "lastKnownWriteTime" : 1576020767,
+    "last_content_update" : 1576020767401,
+    "path" : "F:/courses2019fall/Yang_Liu/FinalProject/libgenr/R/libgen_download.R",
+    "project_path" : "R/libgen_download.R",
+    "properties" : {
+        "cursorPosition" : "2,3",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576019593110.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2049030158",
+    "id" : "1760FF09",
+    "lastKnownWriteTime" : 1576043236,
+    "last_content_update" : 1576043236832,
+    "path" : "F:/courses2019fall/Yang_Liu/FinalProject/libgenr/R/has_field.R",
+    "project_path" : "R/has_field.R",
+    "properties" : {
+        "cursorPosition" : "2,158",
+        "scrollLine" : "0",
+        "tempName" : "Untitled2"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

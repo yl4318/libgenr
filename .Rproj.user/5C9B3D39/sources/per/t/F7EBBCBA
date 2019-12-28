@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576019588939.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1575502668",
+    "id" : "F7EBBCBA",
+    "lastKnownWriteTime" : 1576008539,
+    "last_content_update" : 1576008539,
+    "path" : "F:/courses2019fall/Yang_Liu/FinalProject/libgenr/R/clean_field.R",
+    "project_path" : "R/clean_field.R",
+    "properties" : {
+        "cursorPosition" : "2,3",
+        "scrollLine" : "0",
+        "tempName" : "Untitled2"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576027919781.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3037133959",
+    "id" : "2E0E6CD",
+    "lastKnownWriteTime" : 1576043099,
+    "last_content_update" : 1576043099860,
+    "path" : "F:/courses2019fall/Yang_Liu/FinalProject/libgenr/vignettes/libgenr.Rmd",
+    "project_path" : "vignettes/libgenr.Rmd",
+    "properties" : {
+        "cursorPosition" : "190,52",
+        "last_setup_crc32" : "",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

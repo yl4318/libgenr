@@ -1,0 +1,244 @@
+---
+title: "libgenr Quickstart Guide"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{libgenr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  comment = '#<',
+  collapse = TRUE,
+  warning = FALSE
+)
+```
+
+```{r setup,echo=FALSE}
+library(libgenr)
+library(knitr)
+library(kableExtra)
+```
+
+
+
+**Library Genesis** (**LibGen**) is a search engine for articles and books on various topics, which allows free access to content that is otherwise paywalled or not digitalized elsewhere.  There are two documented ways to use the free public LiGgen API to query the LibGen database: by text ID, or by date, which means that it does not support  the most common use -- searching for texts. The purpose of this package (*libgenr*) is not only wrapping on top of the two ways of queries, but also providing search and download functions.
+This vignette goes through functionality of *libgenr* package and explains the basics into querying the LibGen databases. 
+
+## About fields
+There are a great many of fields available in LibGen database. Sometimes you don't want to get all of the details of a book, instead you simply want to look at basic informations to see if it's the book you want. You can achieve that by specifying `fields` in *libgenr* functions and you'll see this later. Right now, let's focus on fields that you can take a look at:  
+
+- ID
+- Title
+- VolumeInfo
+- Series
+- Periodical
+- Author
+- Year
+- Edition
+- Publisher
+- City
+- Pages
+- Language
+- Topic
+- Library
+- Issue
+- Identifier
+- ISSN
+- ASIN
+- UDC
+- LBC
+- DDC
+- LCC
+- Doi
+- Googlebookid
+- OpenLibraryID
+- Commentary
+- DPI
+- Color
+- Cleaned
+- Orientation
+- Paginated
+- Scanned
+- Bookmarked
+- Searchable
+- Filesize
+- Extension
+- MD5
+- CRC32
+- eDonkey
+- AICH
+- SHA1
+- TTH
+- Generic
+- Visible
+- Locator
+- Local
+- TimeAdded
+- TimeLastModified
+- Coverurl
+- identifierwodash
+- tags
+- pagesinfile
+- descr
+- toc
+- tth
+- sha1
+- aich
+- btih
+- torrent
+- crc32  
+
+Above list of fields is called `full_fields` in this package. To avoid redundancy, returning fields of all functions defaults to `partial_fields` listed below:  
+
+- ID
+- Title
+- VolumeInfo
+- Series
+- Periodical
+- Author
+- Year
+- Edition
+- Publisher
+- Pages
+- Language
+- Topic
+- Library
+- Issue
+- Identifier
+- ISSN
+- Filesize
+- Extension
+- MD5
+- CRC32
+- Locator
+- TimeAdded
+- TimeLastModified
+- torrent
+
+If you think even the `partial_fields` is redundant, feel free to decide which fields to return on your own!
+
+## Get book data by ID
+As mentioned above, one main way of query the LibGen database is using book ID. If you know the ID of books you need, simply use `libgen_ID_retrive()` to pull your book info:
+
+```{r}
+ID<-c(1,10,100,1000,10000)
+books<-libgen_ID_retrieve(ID)
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")%>%
+  scroll_box(width = '700px')
+```
+
+Or specify your fields:
+
+```{r}
+ID<-c(1,10,100,1000,10000)
+fields<-c("ID","Title","Author","Publisher","Edition")
+books<-libgen_ID_retrieve(ID,fields=fields)
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
+## Search the database
+
+Most of the time we don't know about book IDs, but we do want to query about books just like using Google. `libgen_search()` gives you the option to search the database. It also allows you to search a single field or sort by a single field. Note that default number of records to return is 25. I will set it to 5 for simplicity.
+
+### A simple search
+
+```{r}
+fields<-c("ID","Title","Author","Publisher","Edition","Language")
+books<-libgen_search("data structures",count=5,fields=fields)
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
+### Search in a column using `search_in=`
+
+```{r}
+fields<-c("ID","Title","Author","Publisher","Edition","Language")
+books<-libgen_search("John",count=5,fields=fields,search_in = 'Author')
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
+### Search with sorting using `sort_by=`
+
+```{r}
+fields<-c("ID","Title","Author","Publisher","Year","Language")
+books<-libgen_search("classical music",count=5,fields=fields,sort_by = 'Year',reverse=TRUE, search_in = "Title")
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
+As you may notice, I set `reverse = TRUE` to sort reversely. If we sort ascendingly, those records with no value on that field would come up first. 
+
+## Get the latest changes of the database 
+
+We can get the latest added or modified records using `libgen_new_uploads()`, although function might not be as helpful as the previous one.
+
+### Get last uploads using `mode = last` (default value)
+
+```{r}
+fields<-c("ID","Title","Author","Year","Language","TimeAdded","TimeLastModified")
+books<-libgen_new_uploads(timefirst = Sys.Date(), count=5,fields = fields,mode='last')
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
+Notice that `timefirst` is current day, and there is also `timelast` which defaults to current day. You can change them both in the format of 'YYYY-MM-DD'.  
+
+Besides `count`, you can also specify where to start using `first =`. 
+
+### Get last modified using `mode = modified`
+
+```{r}
+fields<-c("ID","Title","Author","Year","Language","TimeAdded","TimeLastModified")
+books<-libgen_new_uploads(timefirst = '2018-12-25', timelast = ' 2018-12-26' ,count=5,
+                          fields = fields,mode='modified')
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
+
+## Download a book to your PC
+
+One of the most amazing things about LibGen is that you can always find electronic copy of your wanted book. There are multiple mirrors to download books from LibGen databases, and in `libgen_download()` I used this one: http://93.174.95.29/. The function always download the file into your current working directory.   
+
+```{r}
+fields<-c("ID","Title","Author","Publisher","Edition","md5")
+books<-libgen_search("statistical learning with application in R",count=5,fields=fields)
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
+After searching for your book, use the `md5` field for downloading.
+
+```{r,message=TRUE}
+#libgen_download(books[5,'md5'])
+```
+
+## Clean your results
+
+You can tell whether a certain field is in your data by calling `has_field()`.
+```{r}
+has_field('language',books)
+```
+
+You can also filter on fields using `clean_field()`. This function accepts random number of arguments. If you want to have results where a certain field is not empty, simply pass `'fieldname'` as an argument. Or if you want to have results where a certain field equals to a value, pass `"fieldname" = value` as an argument.
+
+```{r}
+fields<-c("ID","Title","Author","Publisher","Edition","Language")
+books<-libgen_new_uploads(timefirst ="2019-12-10", count=20,fields = fields,mode='last')
+kable(books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
+Based on above results, if we want to remove records without publisher and restrict language to English:
+
+```{r}
+clean_books<-clean_field(books,"publisher","language"="English")
+kable(clean_books)%>%
+  kable_styling(bootstrap_options ="condensed")
+```
+
